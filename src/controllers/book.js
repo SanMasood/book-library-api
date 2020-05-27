@@ -1,4 +1,4 @@
-const {Book} = require('../models/book');
+const {Book} = require('../models');
 
 /*const getBooks = (_, res) => {
     Book.findAll().then(books => {
@@ -6,8 +6,8 @@ const {Book} = require('../models/book');
     });
 }*/
 const createBook = (req,res) => {
-    const newBook = req.body;
-    Book.create(newBook)
+    //const newBook = req.body;
+    Book.create(req.body)
     .then(newBookCreated => res.status(200).json(newBookCreated))
 }
 
