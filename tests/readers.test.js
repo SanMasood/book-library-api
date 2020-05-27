@@ -17,7 +17,7 @@ describe('/readers', () => {
         });
         const newReaderRecord = await Reader.findByPk(response.body.id, {
           raw: true,
-        });
+        });//why finding??
 
         expect(response.status).to.equal(201);
         expect(response.body.name).to.equal('Elizabeth Bennet');

@@ -1,0 +1,14 @@
+const {Book} = require('../models/book');
+
+/*const getBooks = (_, res) => {
+    Book.findAll().then(books => {
+      res.status(200).json(books);
+    });
+}*/
+const createBook = (req,res) => {
+    const newBook = req.body;
+    Book.create(newBook)
+    .then(newBookCreated => res.status(200).json(newBookCreated))
+}
+
+module.exports = {createBook};

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         author: DataTypes.STRING,
         genre: DataTypes.STRING, 
         ISBN: DataTypes.STRING
-    },
+    };
     return sequelize.define('Book', schema);
 
 };
