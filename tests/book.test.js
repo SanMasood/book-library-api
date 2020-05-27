@@ -27,4 +27,48 @@ describe('/books', () => {
             })
         })        
     })
+
+    describe('With records in the table', () => {
+        let books;
+        beforeEach(async() =>{
+            await Book.destroy({where: {} });
+
+            books = await Promise.all([
+                Book.create({
+                  title: 'Lord of the Rings',
+                  author: 'J. R. Tolkein',
+                  genre: 'Fiction',
+                  ISBN: 'TO8978675645'
+                }),
+                Book.create({
+                    title: 'Harry Potter',
+                    author: 'J. K. Rowling',
+                    genre: 'Fantasy',
+                    ISBN: 'JK6758475645'
+                  }),
+                  Book.create({
+                    title: 'Flyaway Kite',
+                    author: 'Enid Blyton',
+                    genre: 'Kids',
+                    ISBN: 'EB9998675645'
+                  })
+                ]);
+            })
+            
+        describe('GET /books', () => {
+            it('gets all book records', async() => {
+                const response = await request(app).get('/books');
+
+                expect(response.status).to.equal(200);
+                expect(response.body.length).to.equal(3);
+
+                response.body.forEach((book)=> {
+                    const expected = 
+                    books.find((a)=> a.id===book.id);
+                    expect(book.title).to.equal(expected.title);
+                    expect(book.ISBN).to.equal (expected.ISBN);
+                })
+            })
+        })
+    })
 })
