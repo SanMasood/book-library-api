@@ -13,4 +13,11 @@ const getAllBooks = (_, res) => {
     });
 }
 
-module.exports = {createBook, getAllBooks};
+const getBookByTitle = (req,res) => {
+  const { title } = req.params;
+
+  Book.findAll({ where: { title } }).then(books => res.status(200).json(books));
+
+  }
+
+module.exports = {createBook, getAllBooks, getBookByTitle};

@@ -66,9 +66,41 @@ describe('/books', () => {
                     const expected = 
                     books.find((a)=> a.id===book.id);
                     expect(book.title).to.equal(expected.title);
-                    expect(book.ISBN).to.equal (expected.ISBN);
+                    expect(book.ISBN).to.equal(expected.ISBN);
                 })
             })
         })
+        describe('GET /books/:author', () => {
+            it('gets books by author', (done) => {
+              request(app)
+                .get(`/books/${books.title}`)
+                .then((res) => {
+                  expect(res.status).to.equal(200);
+                  //expect(res.body.length).to.equal(3);
+      
+                  res.body.forEach((book) => { 
+                    const expected = books.find((a) => a.title === book.title);
+                    expect(book.title).to.equal(expected.title);
+                    expect(book.author).to.equal(expected.author);
+                  });
+                  done();
+                });
+            });
+        })
     })
 })
+        /*describe('GET /books/:title', () => {
+            it('gets book records by title', async () => {
+                const book = books[0];
+                const response = await request(app).get(`/books/${book.title}`);
+                
+                expect(response.status).to.equal(200);
+                //expect(response.body.id).to.equal(book.id);
+                //res.body.forEach((album) => { 
+                   // const expected = albums.find((a) => a.id === album.id);
+                expect(response.body.title).to.equal(book.title);
+                expect(response.body.author).to.equal(book.author);
+
+            })
+        })*/
+ 
