@@ -70,8 +70,8 @@ describe('/books', () => {
                 })
             })
         })
-        describe('GET /books/:author', () => {
-            it('gets books by author', (done) => {
+        describe('GET /books/:title', () => {
+            it('gets books by title', (done) => {
               request(app)
                 .get(`/books/${books.title}`)
                 .then((res) => {

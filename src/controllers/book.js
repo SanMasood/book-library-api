@@ -1,4 +1,5 @@
 const {Book} = require('../models');
+const { Op } = require("sequelize");
 
 
 const createBook = (req,res) => {
@@ -13,11 +14,18 @@ const getAllBooks = (_, res) => {
     });
 }
 
-const getBookByTitle = (req,res) => {
+const getBookByTitle = async (req,res) => {
   const { title } = req.params;
 
-  Book.findAll({ where: { title } }).then(books => res.status(200).json(books));
+  Book.findAll({ 
+    where: { 
+     title: { [Op.like]: `%${title}%`}   }
+  
+  })
+  .then(books => res.status(200).json(books));
 
   }
+
+
 
 module.exports = {createBook, getAllBooks, getBookByTitle};
