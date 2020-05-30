@@ -1,5 +1,5 @@
 const {Book} = require('../models');
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 
 
 const createBook = (req,res) => {
@@ -14,18 +14,37 @@ const getAllBooks = (_, res) => {
     });
 }
 
-const getBookByTitle = async (req,res) => {
+const getBookByTitle = (req,res) => {
   const { title } = req.params;
 
-  Book.findAll({ 
-    where: { 
-     title: { [Op.like]: `%${title}%`}   }
-  
-  })
-  .then(books => res.status(200).json(books));
-
+  Book.findByPk(title).then( user => {
+    Book.findAll({ 
+      where: { 
+       title: { [Op.like]: `%${title}%`}   }  
+    })
+    .then(books => {
+      if (!books)
+      res.status(404).json({ error: 'No such book title found.' });
+       else res.status(200).json(books);
+      });
+    })
   }
+    
+    /*Book.findAll({ 
+      where: { 
+       title: { [Op.like]: `%${title}%`}   }  
+    })
+    .then((books) => {
+      if (!books) //dont get this.
+        res.status(404).json({ error: 'The artist could not be found.' });
+       else 
+        res.status(200).json(books);     
 
+  })
+})*/
+
+
+ 
 
 
 module.exports = {createBook, getAllBooks, getBookByTitle};
