@@ -8,7 +8,9 @@ describe('/readers', () => {
   before(async () => Reader.sequelize.sync());
 
   describe('with no records in the database', () => {
+
     describe('POST /readers', () => {
+
       it('creates a new reader in the database', async () => {
         const response = await request(app).post('/readers').send({
           name: 'Elizabeth Bennet',
@@ -19,12 +21,20 @@ describe('/readers', () => {
           raw: true,
         });//why finding??
 
-        expect(response.status).to.equal(201);
+        expect(response.status).to.equal(200);
         expect(response.body.name).to.equal('Elizabeth Bennet');
         expect(newReaderRecord.name).to.equal('Elizabeth Bennet');
         expect(newReaderRecord.email).to.equal('future_ms_darcy@gmail.com');
         expect(newReaderRecord.password).to.equal('elizabeth12345');
       });
+      /*it ('throws an error if email is in incorrect format', async() => {
+        const response = await request(app).post('/readers').send({
+          name: 'Elizabeth Bennet',
+          email: 'future_ms_darcy',
+          password: 'elizabeth12345'
+        });
+        
+      })*/
     });
   });
 

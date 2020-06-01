@@ -10,11 +10,11 @@ const getModel = (model) => {
 
 const get404Error = (model) => ({error: `The ${model} could not be found.`});
 
-const createItems = (res,model,item) => {
+const createItems = (res,model,newInfo) => {
     const Model = getModel(model);
 
-    return Model.create(item)
-    .then((newItemCreated) => res.status(201).json(newItemCreated))
+    return Model.create(newInfo)
+    .then((newItemCreated) => res.status(200).json(newItemCreated))
     .catch((error) => {
         const errorMessages = error.errors.map((e) => e.message);
         return res.status(400).json({errors: errorMessages});
@@ -29,10 +29,10 @@ const getItems = (res,model) => {
     });
 }
 
-const updateItems = (res, model, item, id) => {
+const updateItems = (res, model, newInfo, id) => {
     const Model = getModel(model);
 
-    return Model.update(item, {where: {id}} )
+    return Model.update(newInfo, {where: {id}} )
     .then(([recordsUpdated]) => {
         if (!recordsUpdated) 
           res.status(404).json(get404Error(model));
