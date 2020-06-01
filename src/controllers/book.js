@@ -3,7 +3,6 @@ const { Op } = require('sequelize');
 
 
 const createBook = (req,res) => {
-    //const newBook = req.body;
     Book.create(req.body)
     .then(newBookCreated => res.status(200).json(newBookCreated))
 }
@@ -14,11 +13,21 @@ const getAllBooks = (_, res) => {
     });
 }
 
-const getBookByTitle = (req,res) => {
-  const { title } = req.params;
+const getBookByID = (req,res) => {
+  const { id } = req.params;
+
+  Book.findByPk(id).then((book) => {
+    if (!book) {
+      res.status(404).json({ error: 'The book could not be found.' });
+    } else {
+      res.status(200).json(book);
+    }
+  });
+}
+
 
   //Book.findByPk(title).then( user => {
-    Book.findAll({ 
+    /*Book.findAll({ 
       where: { 
        title: { [Op.like]: `%${title}%`}   }  
     })
@@ -26,11 +35,9 @@ const getBookByTitle = (req,res) => {
       if (!books)
       res.status(404).json({ error: 'No such book title found.' });
        else res.status(200).json(books);
-      })
+      })*/
   
-  }
-
-  const updateBook = (req, res) => {
+      const updateBook = (req, res) => {
     const { id } = req.params;
     const newDetails = req.body;
   
@@ -65,4 +72,4 @@ const deleteBook = (req, res) => {
 }
     
    
-module.exports = {createBook, getAllBooks, getBookByTitle, updateBook, deleteBook};
+module.exports = {createBook, getAllBooks, getBookByID, updateBook, deleteBook};

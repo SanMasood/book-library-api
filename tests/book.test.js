@@ -70,37 +70,27 @@ describe('/books', () => {
                 })
             })
         })
-        describe('GET /books/:title', () => {
-            it('gets books by title', async() => {
-                request(app)
-                  .get(`/books/${books.title}`)
-                  .then((res) => {
-                    expect(res.status).to.equal(200);
-                    //expect(res.body.length).to.equal(3)
-      
-                  res.body.forEach((book) => { 
-                    const expected = books.find((a) => a.title === book.title);
-                    expect(book.title).to.equal(expected.title);
-                    expect(book.author).to.equal(expected.author);
-                  });
-                  //done();
-                });
-            });
-            it('returns a 404 if the book does not exist', async() => {
-                request(app)
-                .get(`/book/123`)
-                
-                //const res = await request(app).get(`/books/123`);
-                .then((res) => {
-
-                expect(res.status).to.equal(404);
-                expect(res.body.error).to.equal('No such book title found.');
-                done();
-              
-            })
         
-        });
-    })
+    describe('GET /books/:id', () => {
+      it('gets a book by id', async () => {
+        const book = books[0];
+        const response = await request(app).get(`/books/${book.id}`);
+
+        expect(response.status).to.equal(200);
+        expect(response.body.title).to.equal(book.title);
+        expect(response.body.author).to.equal(book.author);
+        expect(response.body.genre).to.equal(book.genre);
+        expect(response.body.ISBN).to.equal(book.ISBN);
+      });
+
+      it('returns a 404 error if the book does not exist', async () => {
+        const response = await request(app).get('/books/000');
+
+        expect(response.status).to.equal(404);
+        expect(response.body.error).to.equal('The book could not be found.');
+      });
+    });
+
         describe('PATCH /books/:id', () => {
             it('updates book title by id', async () => {
               const book = books[0];
