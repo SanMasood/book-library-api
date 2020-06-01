@@ -1,18 +1,22 @@
 const { Reader } = require('../models');
 
-const getReaders = (_, res) => {
+const {getItems, createItems, updateItems} = require('./helpers');
+
+/*const getReaders = (_, res) => {
   Reader.findAll().then(readers => {
     res.status(200).json(readers);
   });
-}
+}*/
+const getReaders = (_, res) => getItems(res, 'reader');
 
-const createReader = (req, res) => {
+/*const createReader = (req, res) => {
   const newReader = req.body;
 
   Reader.create(newReader).then(newReaderCreated => res.status(201).json(newReaderCreated));
-}
+}*/
+const createReader = (_,res) => createItems (res, 'reader', req.body);
 
-const updateReader = (req, res) => {
+/*const updateReader = (req, res) => {
   const { id } = req.params;
   const newDetails = req.body;
 
@@ -29,7 +33,8 @@ const updateReader = (req, res) => {
     }
       )}
   });
-}
+}*/
+const updateReader = (req,res) => updateItems (res, 'reader', req.body, req.params.id );
 
 const getReaderById = (req, res) => {
   const { id } = req.params;

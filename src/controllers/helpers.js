@@ -10,7 +10,7 @@ const getModel = (model) => {
 
 const get404Error = (model) => ({error: `The ${model} could not be found.`});
 
-const createItem = (res,model,item) => {
+const createItems = (res,model,item) => {
     const Model = getModel(model);
 
     return Model.create(item)
@@ -27,4 +27,17 @@ const getItems = (res,model) => {
         res.status(200).json(allItems);
     });
 }
-module.exports = { createItem, getItems }
+
+const updateItems = (res, model, item, id) => {
+    const Model = getModel(model);
+    return Model.update(item, {where: {id}} )
+    .then(([recordsUpdated]) => {
+        if (!recordsUpdated) 
+          res.status(404).json(get404Error(model));
+       else 
+        Model.findByPk(id).then((updatedItem) => {
+          res.status(200).json(updatedItem);
+      })
+    })
+}
+module.exports = { createItems, getItems, updateItems }
