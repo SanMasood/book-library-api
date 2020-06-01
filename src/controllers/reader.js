@@ -1,20 +1,20 @@
 const { Reader } = require('../models');
 
-const {getItems, createItems, updateItems} = require('./helpers');
+const {getItems, createItems, updateItems, getItemsByID, deleteItems} = require('./helpers');
 
 /*const getReaders = (_, res) => {
   Reader.findAll().then(readers => {
     res.status(200).json(readers);
   });
 }*/
-const getReaders = (_, res) => getItems(res, 'reader');
+const getReaders = (req, res) => getItems(res, 'reader');
 
 /*const createReader = (req, res) => {
   const newReader = req.body;
 
   Reader.create(newReader).then(newReaderCreated => res.status(201).json(newReaderCreated));
 }*/
-const createReader = (_,res) => createItems (res, 'reader', req.body);
+const createReader = (req,res) => createItems (res, 'reader', req.body);
 
 /*const updateReader = (req, res) => {
   const { id } = req.params;
@@ -36,7 +36,7 @@ const createReader = (_,res) => createItems (res, 'reader', req.body);
 }*/
 const updateReader = (req,res) => updateItems (res, 'reader', req.body, req.params.id );
 
-const getReaderById = (req, res) => {
+/*const getReaderById = (req, res) => {
   const { id } = req.params;
 
   Reader.findByPk(id).then(reader => {
@@ -50,9 +50,12 @@ const getReaderById = (req, res) => {
         .json(reader);
     }
   });
-}
+}*/
+const getReaderById = (req,res) => getItemsByID(res, 'reader', req.params.id);
 
-const deleteReader = (req, res) => {
+const deleteReader = (req,res) => deleteItems(res, 'reader', req.params.id);
+
+/*const deleteReader = (req, res) => {
   const { id } = req.params;
 
   Reader
@@ -68,7 +71,7 @@ const deleteReader = (req, res) => {
         });
     }
   });
-}
+}*/
 
 module.exports = {
   getReaders,

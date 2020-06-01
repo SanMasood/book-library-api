@@ -1,4 +1,4 @@
-const { Book, Reader} = require ('../models');
+const { Book, Reader } = require ('../models');
 
 const getModel = (model) => {
     const models = {
@@ -23,6 +23,7 @@ const createItems = (res,model,item) => {
 
 const getItems = (res,model) => {
     const Model = getModel(model);
+
     return Model.findAll().then((allItems) => {
         res.status(200).json(allItems);
     });
@@ -30,6 +31,7 @@ const getItems = (res,model) => {
 
 const updateItems = (res, model, item, id) => {
     const Model = getModel(model);
+
     return Model.update(item, {where: {id}} )
     .then(([recordsUpdated]) => {
         if (!recordsUpdated) 
@@ -40,4 +42,31 @@ const updateItems = (res, model, item, id) => {
       })
     })
 }
-module.exports = { createItems, getItems, updateItems }
+const getItemsByID = (res, model, id) => {
+    const Model = getModel(model);
+
+    return Model.findByPk(id).then(item => {
+        if (!item) {
+          res.status(404).json(get404Error(model));
+        } else {
+          res.status(200).json(item);
+        }
+    });
+}
+const deleteItems = (res, model, id) => {
+    const Model = getModel(model);
+
+    return Model.findByPk(id).then(toDelete => {
+        if(!toDelete) {
+            res.status(404).json(get404Error(model));
+        }
+        else {
+            Model.destroy({ where : { id } })
+            .then(() => 
+            {
+                res.status(204).send();
+            })
+        }
+    })
+}
+module.exports = { createItems, getItems, updateItems , getItemsByID, deleteItems }
