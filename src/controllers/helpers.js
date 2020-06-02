@@ -8,16 +8,26 @@ const getModel = (model) => {
     return models[model];
 }
 
+const removePassword = (obj) => {
+    if (obj.hasOwnProperty('password'))
+    delete obj.password;
+
+    return obj;
+}
+
 const get404Error = (model) => ({error: `The ${model} could not be found.`});
 
 const createItems = (res,model,newInfo) => {
     const Model = getModel(model);
 
     return Model.create(newInfo)
-    .then((newItemCreated) => res.status(200).json(newItemCreated))
+    .then((newItemCreated) => {
+        const itemsWithoutPassword = removePassword(newItemCreated.dataValues);
+        res.status(200).json(itemsWithoutPassword);
+    })
     .catch((error) => {
         const errorMessages = error.errors.map((e) => e.message);
-        return res.status(400).json({errors: errorMessages});
+        return res.status(400).json({errors: errorMessages}); //
     });
 }
 
@@ -25,7 +35,10 @@ const getItems = (res,model) => {
     const Model = getModel(model);
 
     return Model.findAll().then((allItems) => {
-        res.status(200).json(allItems);
+        const itemsWithoutPassword = allItems.map((items) =>
+        removePassword(items.dataValues));
+
+        res.status(200).json(itemsWithoutPassword);
     });
 }
 
@@ -38,7 +51,8 @@ const updateItems = (res, model, newInfo, id) => {
           res.status(404).json(get404Error(model));
        else 
         Model.findByPk(id).then((updatedItem) => {
-          res.status(200).json(updatedItem);
+            const itemsWithoutPassword = removePassword(updatedItem.dataValues);
+            res.status(200).json(itemsWithoutPassword);
       })
     })
 }
@@ -49,7 +63,8 @@ const getItemsByID = (res, model, id) => {
         if (!item) {
           res.status(404).json(get404Error(model));
         } else {
-          res.status(200).json(item);
+            const itemsWithoutPassword = removePassword(item.dataValues);
+          res.status(200).json(itemsWithoutPassword);
         }
     });
 }

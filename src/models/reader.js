@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
         min: 8
       }
     },
+    
+    
   };
 
   return sequelize.define('Reader', schema);
