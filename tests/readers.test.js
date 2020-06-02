@@ -13,19 +13,19 @@ describe('/readers', () => {
 
       it('creates a new reader in the database', async () => {
         const response = await request(app).post('/readers').send({
-          name: 'Elizabeth Bennet',
-          email: 'future_ms_darcy@gmail.com',
-          password: 'elizabeth12345'
+          name: 'Elzabeth Bennet',
+          email: 'uture_ms_darcy@gmail.com',
+          password: 'elzabeth12345'
         });
         const newReaderRecord = await Reader.findByPk(response.body.id, {
           raw: true,
         });//why finding??
 
         expect(response.status).to.equal(200);
-        expect(response.body.name).to.equal('Elizabeth Bennet');
-        expect(newReaderRecord.name).to.equal('Elizabeth Bennet');
-        expect(newReaderRecord.email).to.equal('future_ms_darcy@gmail.com');
-        expect(newReaderRecord.password).to.equal('elizabeth12345');
+        expect(response.body.name).to.equal('Elzabeth Bennet');
+        expect(newReaderRecord.name).to.equal('Elzabeth Bennet');
+        expect(newReaderRecord.email).to.equal('uture_ms_darcy@gmail.com');
+        expect(newReaderRecord.password).to.equal('elzabeth12345');
       });
       /*it ('throws an error if email is in incorrect format', async() => {
         const response = await request(app).post('/readers').send({

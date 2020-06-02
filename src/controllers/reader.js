@@ -11,7 +11,6 @@ const getReaders = (req, res) => getItems(res, 'reader');
 
 /*const createReader = (req, res) => {
   const newReader = req.body;
-
   Reader.create(newReader).then(newReaderCreated => res.status(201).json(newReaderCreated));
 }*/
 const createReader = (req,res) => createItems (res, 'reader', req.body);
@@ -19,7 +18,6 @@ const createReader = (req,res) => createItems (res, 'reader', req.body);
 /*const updateReader = (req, res) => {
   const { id } = req.params;
   const newDetails = req.body;
-
   Reader
     .update(newDetails, { where: { id } })
     .then(([recordsUpdated]) => {
@@ -38,7 +36,6 @@ const updateReader = (req,res) => updateItems (res, 'reader', req.body, req.para
 
 /*const getReaderById = (req, res) => {
   const { id } = req.params;
-
   Reader.findByPk(id).then(reader => {
     if (!reader) {
       res
@@ -57,7 +54,6 @@ const deleteReader = (req,res) => deleteItems(res, 'reader', req.params.id);
 
 /*const deleteReader = (req, res) => {
   const { id } = req.params;
-
   Reader
     .findByPk(id)
     .then(foundReader => {
