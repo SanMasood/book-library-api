@@ -4,7 +4,11 @@ const { Author } = require('../src/models');
 const app = require('../src/app');
 
 describe ('/authors', () => {
-    before(async () => Author.sequelize.sync());
+    before(async () => {   
+         await Author.sequelize.sync();    
+         await Author.destroy({ where: {} });    
+    }); 
+        
 
     describe ('with no authors in the table', () => {
         describe ('POST /authors', () => {
@@ -32,7 +36,7 @@ describe ('/authors', () => {
               expect(newAuthorRecord).to.equal(null);  
             });
 
-            xit ('throws an error for duplicate author name', async() => {
+            it ('throws an error for duplicate author name', async() => {
                 const response = await request(app).post('/authors').send({
                     name: 'Jules Verne',
                 });
@@ -110,13 +114,13 @@ describe ('/authors', () => {
             expect(response.status).to.equal(200);
             expect(updatedAuthorRecord.name).to.equal('F yuyu');
         })
-        xit ('throws an error if author id not found', async() => {
+        it ('throws an error if author id not found', async() => {
             const response = await request(app)
-            .patch('/authors/000')
+            .patch(`/authors/000`)
             .send({ name : 'Test Author'});
 
-            expect(response.status).to.equal(400);
-            expect(response.body.error).to.equal('The author could not be found');
+            expect(response.status).to.equal(404);
+            expect(response.body.error).to.equal('The author could not be found.');
         })
     })
 
