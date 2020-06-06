@@ -24,9 +24,22 @@ describe ('/authors', () => {
                 expect(response.body.name).to.equal('Jules Verne');
                 expect(newAuthorRecord.name).to.equal('Jules Verne');
             });
+
             it('throws an error if author is empty', async() => {
                 const response = await request(app).post('/authors').send({
                   name: '',
+              });
+              const newAuthorRecord = await Author.findByPk(response.body.id, {
+                  raw: true,
+              });
+              expect(response.status).to.equal(400);
+              expect(response.body.errors.length).to.equal(1);
+              expect(newAuthorRecord).to.equal(null);  
+            });
+
+            it('throws an error if author is null', async() => {
+                const response = await request(app).post('/authors').send({
+                  name: null,
               });
               const newAuthorRecord = await Author.findByPk(response.body.id, {
                   raw: true,
@@ -70,7 +83,7 @@ describe ('/authors', () => {
             ]);
         })
     describe('GET /authors', () => {
-        it ('gets all authors', async () => {
+        xit ('gets all authors', async () => {
             const response = await request(app).get('/authors');
 
             expect(response.status).to.equal(200);
@@ -133,10 +146,17 @@ describe ('/authors', () => {
             expect(response.status).to.equal(204);
             expect(deletedAuthor).to.equal(null);
         })
+        xit ('throws an error if author by ID is not found', async() => {
+            const response = await request(app).delete('authors/00000');
+            expect(response.status).to.equal(404);
+            expect(response.body.error).to.equal('The author could not be found.');
+
+        })
 
     })
 
 })
 })
+
 
 
