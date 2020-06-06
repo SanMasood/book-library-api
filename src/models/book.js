@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
             validate:{
                 notNull: true
             }
-
         },
         author: {
             type: DataTypes.STRING,

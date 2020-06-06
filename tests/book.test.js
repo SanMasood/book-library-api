@@ -25,6 +25,34 @@ describe('/books', () => {
                 expect(newBookRecord.title).to.equal('30,000 Leagues Under the Sea');
                 expect(newBookRecord.ISBN).to.equal('KL3423125689');    
             })
+            it ('throws an error if title is not entered', async() => {
+              const response = await request(app).post('/books').send({
+                author: 'Jules Vern',
+                genre: 'Adventure',
+                ISBN: 'KL3423125889'
+            });
+            const newBookRecord = await Book.findByPk(response.body.id, {
+                raw: true,
+            });
+            expect(response.status).to.equal(400);
+            expect(response.body.errors.length).to.equal(1);
+            expect(newBookRecord).to.equal(null);
+
+            })
+            it ('throws an error if author is not entered', async() => {
+              const response = await request(app).post('/books').send({
+                title: 'Hullabaloo',
+                genre: 'Kids',
+                ISBN: 'KL3423000889'
+            });
+            const newBookRecord = await Book.findByPk(response.body.id, {
+                raw: true,
+            });
+            expect(response.status).to.equal(400);
+            expect(response.body.errors.length).to.equal(1);
+            expect(newBookRecord).to.equal(null);
+
+            })
         })        
     })
 
