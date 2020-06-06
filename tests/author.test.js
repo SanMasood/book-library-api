@@ -24,7 +24,7 @@ describe ('/authors', () => {
                 expect(response.body.name).to.equal('Jules Verne');
                 expect(newAuthorRecord.name).to.equal('Jules Verne');
             });
-            it ('throws an error if author is empty', async() => {
+            it('throws an error if author is empty', async() => {
                 const response = await request(app).post('/authors').send({
                   name: '',
               });
@@ -36,7 +36,7 @@ describe ('/authors', () => {
               expect(newAuthorRecord).to.equal(null);  
             });
 
-            it ('throws an error for duplicate author name', async() => {
+            it('throws an error for duplicate author name', async() => {
                 const response = await request(app).post('/authors').send({
                     name: 'Jules Verne',
                 });
@@ -122,6 +122,18 @@ describe ('/authors', () => {
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The author could not be found.');
         })
+    })
+    describe('DELETE /authors', () => {
+        it ('deletes author record by id', async() => {
+            const author = authors[0];
+            const response = await request(app)
+            .delete(`/authors/${author.id}`);
+            const deletedAuthor = await Author.findByPk(author.id, {raw:true});
+
+            expect(response.status).to.equal(204);
+            expect(deletedAuthor).to.equal(null);
+        })
+
     })
 
 })
