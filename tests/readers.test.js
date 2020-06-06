@@ -23,18 +23,41 @@ describe('/readers', () => {
 
         expect(response.status).to.equal(200);
         expect(response.body.name).to.equal('Elzabeth Bennet');
+        expect(response.body.password).to.equal(undefined);//for not returning password
+
         expect(newReaderRecord.name).to.equal('Elzabeth Bennet');
         expect(newReaderRecord.email).to.equal('uture_ms_darcy@gmail.com');
         expect(newReaderRecord.password).to.equal('elzabeth12345');
       });
-      /*it ('throws an error if email is in incorrect format', async() => {
+
+      it('throws an error if email is in wrong format', async() => {
+
         const response = await request(app).post('/readers').send({
-          name: 'Elizabeth Bennet',
-          email: 'future_ms_darcy',
-          password: 'elizabeth12345'
+          name: 'Gary Vee',
+          email: 'garyveegmaildotcom',
+          password: 'password5454',
         });
-        
-      })*/
+        const newReaderRecord = await Reader.findByPk(response.body.id, {
+          raw: true,
+        });
+        expect(response.status).to.equal(400);
+        expect(response.body.errors.length).to.equal(1);
+        expect(newReaderRecord).to.equal(null);
+      })
+      it('throws an error if password is in wrong format', async() => {
+
+        const response = await request(app).post('/readers').send({
+          name: 'Gary Vee',
+          email: 'garyvee&gmaildotcom',
+          password: 'pass4',
+        });
+        const newReaderRecord = await Reader.findByPk(response.body.id, {
+          raw: true,
+        });
+        expect(response.status).to.equal(400);
+        expect(response.body.errors.length).to.equal(1);
+        expect(newReaderRecord).to.equal(null);
+      })
     });
   });
 
@@ -61,6 +84,8 @@ describe('/readers', () => {
 
         expect(response.status).to.equal(200);
         expect(response.body.length).to.equal(3);
+        expect(response.body.password).to.equal(undefined);
+
 
         response.body.forEach((reader) => {
           const expected = readers.find((a) => a.id === reader.id);
@@ -79,6 +104,8 @@ describe('/readers', () => {
         expect(response.status).to.equal(200);
         expect(response.body.name).to.equal(reader.name);
         expect(response.body.email).to.equal(reader.email);
+        expect(response.body.password).to.equal(undefined);
+
       });
 
       it('returns a 404 if the reader does not exist', async () => {

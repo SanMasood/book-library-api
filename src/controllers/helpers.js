@@ -5,7 +5,7 @@ const getModel = (model) => {
         book: Book,
         reader: Reader,
     };
-    return models[model];
+    return models[model]; //when youdont know name of the property
 }
 
 const removePassword = (obj) => {
@@ -38,7 +38,7 @@ const getItems = (res,model) => {
         const itemsWithoutPassword = allItems.map((items) =>
         removePassword(items.dataValues));
 
-        res.status(200).json(itemsWithoutPassword);
+        res.status(200).json(itemsWithoutPassword); //needs error handling
     });
 }
 

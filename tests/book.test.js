@@ -105,7 +105,7 @@ describe('/books', () => {
               expect(updatedBookRecord.title).to.equal('Little Women');
             });
       
-            xit('returns a 404 if the book does not exist', async () => {
+            it('returns a 404 if the book does not exist', async () => {
               const response = await request(app)
                 .patch('/books/000')
                 .send({ title: 'etc' });
