@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            //must be unique?
+            unique: true,
             validate:{
                 notNull: true,
                 notEmpty: true, //checks for empty string

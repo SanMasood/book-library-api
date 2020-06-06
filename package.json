@@ -15,7 +15,7 @@
     "start": "nodemon -r dotenv/config server.js",
     "pretest": "node scripts/create-database.js test",
     "test": "NODE_ENV=test mocha tests/**/*.js --exit --recursive --timeout 60000 --file ./tests/test-setup.js",
-    "posttest": ""
+    "posttest": "node scripts/drop-database.js"
   },
   "devDependencies": {
     "chai": "^4.2.0",

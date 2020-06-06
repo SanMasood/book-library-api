@@ -30,13 +30,26 @@ describe ('/authors', () => {
               expect(response.status).to.equal(400);
               expect(response.body.errors.length).to.equal(1);
               expect(newAuthorRecord).to.equal(null);  
+            });
+
+            xit ('throws an error for duplicate author name', async() => {
+                const response = await request(app).post('/authors').send({
+                    name: 'Jules Verne',
+                });
+                const newAuthorRecord = await Author.findByPk(response.body.id, {
+                    raw: true,
+                });
+                expect(response.status).to.equal(400);
+                expect(response.body.errors.length).to.equal(1);
+                expect(newAuthorRecord).to.equal(null);  
             })
 
         })
     })
-})
-    /*describe('With records in the table', () => {
+
+    describe('With authors in the table', () => {
         let authors;
+
         beforeEach(async() =>{
             await Author.destroy({where: {} });
 
@@ -66,6 +79,48 @@ describe ('/authors', () => {
 
         })
     })
+    describe('GET /authors/:id', () => {
+        it('gets authors record by id', async () => {
+          const author = authors[0];
+          const response = await request(app).get(`/authors/${author.id}`);
+  
+          expect(response.status).to.equal(200);
+          expect(response.body.name).to.equal(author.name);
+          
+        });
+        it('returns a 404 error if the author does not exist', async () => {
+            const response = await request(app).get('/authors/000');
+    
+            expect(response.status).to.equal(404);
+            expect(response.body.error).to.equal('The author could not be found.');
+          });
 
-})*/
+    })
+
+    describe('PATCH /authors/:id', () => {
+        it ('updates author name by id', async () => {
+            const author = authors[0];
+            const response = await request(app)
+            .patch(`/authors/${author.id}`)
+            .send({name : 'F yuyu'});
+
+            const updatedAuthorRecord = await Author.findByPk(author.id, {
+                raw : true,
+            });
+            expect(response.status).to.equal(200);
+            expect(updatedAuthorRecord.name).to.equal('F yuyu');
+        })
+        xit ('throws an error if author id not found', async() => {
+            const response = await request(app)
+            .patch('/authors/000')
+            .send({ name : 'Test Author'});
+
+            expect(response.status).to.equal(400);
+            expect(response.body.error).to.equal('The author could not be found');
+        })
+    })
+
+})
+})
+
 
