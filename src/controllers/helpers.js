@@ -1,9 +1,10 @@
-const { Book, Reader } = require ('../models');
+const { Book, Reader, Author } = require ('../models');
 
 const getModel = (model) => {
     const models = {
         book: Book,
         reader: Reader,
+        author: Author,
     };
     return models[model]; //when youdont know name of the property
 }
