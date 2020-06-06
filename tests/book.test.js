@@ -38,7 +38,7 @@ describe('/books', () => {
             expect(response.body.errors.length).to.equal(1);
             expect(newBookRecord).to.equal(null);
 
-            })
+            });
             it ('throws an error if author is not entered', async() => {
               const response = await request(app).post('/books').send({
                 title: 'Hullabaloo',

@@ -1,11 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     const schema = {
-        author: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
             //must be unique?
             validate:{
-                notNull: true
+                notNull: true,
+                notEmpty: true, //checks for empty string
             }
         }
     }
