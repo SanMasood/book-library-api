@@ -1,4 +1,4 @@
-//const {Book} = require('../models');
+const {Book} = require('../models');
 //const { Op } = require('sequelize');
 
 const {getItems, createItems, updateItems, getItemsByID, deleteItems} = require('./helpers');
@@ -77,5 +77,5 @@ const updateBook = (req,res) => updateItems(res, 'book', req.body, req.params.id
   });
 }*/
 const deleteBook = (req,res) => deleteItems(res, 'book', req.params.id);
-   
+
 module.exports = {createBook, getAllBooks, getBookByID, updateBook, deleteBook};

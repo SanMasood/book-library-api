@@ -5,8 +5,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
             validate:{
-                notNull: true
-            }
+                notNull: {
+                    args: [true],
+                    msg: 'We need a genre so we can create one.',
+                    
+                },
+                notEmpty: {
+                    args: [true],
+                    msg: 'We need a genre so we can create one.',
+                },
+            },
         },
        
     };
