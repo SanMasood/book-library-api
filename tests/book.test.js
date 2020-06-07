@@ -39,9 +39,10 @@ describe('/books', () => {
             expect(newBookRecord).to.equal(null);
 
             });
-            it ('throws an error if author is not entered', async() => {
+            it ('throws an error if title is an empty string', async() => {
               const response = await request(app).post('/books').send({
-                title: 'Hullabaloo',
+
+                title: '',
                 genre: 'Kids',
                 ISBN: 'KL3423000889'
             });
@@ -149,7 +150,7 @@ describe('/books', () => {
               const response = await request(app).delete(`/books/${book.id}`);
               const deletedBook = await Book.findByPk(book.id, { raw: true });
       
-              expect(response.status).to.equal(204);
+              expect(response.status).to.equal(200);
               expect(deletedBook).to.equal(null);
             });
       

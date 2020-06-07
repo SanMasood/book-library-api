@@ -137,16 +137,16 @@ describe ('/genres', () => {
         })
     })
     describe('DELETE /genres', () => {
-        xit ('deletes genre record by id', async() => {
+        it ('deletes genre record by id', async() => {
             const genre = genres[0];
             const response = await request(app)
             .delete(`/genres/${genre.id}`);
             const deletedGenre = await Genre.findByPk(genre.id, {raw:true});
 
-            expect(response.status).to.equal(204);
+            expect(response.status).to.equal(200);
             expect(deletedGenre).to.equal(null);
         })
-        xit ('throws an error if genre by ID is not found', async() => {
+        it ('throws an error if genre by ID is not found', async() => {
             const response = await request(app).delete('genres/00000');
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The genre could not be found.');

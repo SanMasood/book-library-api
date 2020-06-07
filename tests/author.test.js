@@ -83,7 +83,7 @@ describe ('/authors', () => {
             ]);
         })
     describe('GET /authors', () => {
-        xit ('gets all authors', async () => {
+        it ('gets all authors', async () => {
             const response = await request(app).get('/authors');
 
             expect(response.status).to.equal(200);
@@ -143,10 +143,10 @@ describe ('/authors', () => {
             .delete(`/authors/${author.id}`);
             const deletedAuthor = await Author.findByPk(author.id, {raw:true});
 
-            expect(response.status).to.equal(204);
+            expect(response.status).to.equal(200);
             expect(deletedAuthor).to.equal(null);
         })
-        xit ('throws an error if author by ID is not found', async() => {
+        it ('throws an error if author by ID is not found', async() => {
             const response = await request(app).delete('authors/00000');
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The author could not be found.');

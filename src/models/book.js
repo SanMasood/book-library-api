@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
         },
-        author: {
+        /*author: {
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
                     msg: 'Author name cannot be empty'
                 },
             },
-        },
+        },*/
         //genre: DataTypes.STRING, 
         ISBN: DataTypes.STRING,
         };

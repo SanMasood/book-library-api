@@ -146,7 +146,7 @@ describe('/readers', () => {
         const response = await request(app).delete(`/readers/${reader.id}`);
         const deletedReader = await Reader.findByPk(reader.id, { raw: true });
 
-        expect(response.status).to.equal(204);
+        expect(response.status).to.equal(200);
         expect(deletedReader).to.equal(null);
       });
 
