@@ -5,8 +5,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
             validate:{
-                notNull: true,
-                notEmpty: true, //checks for empty string
+                notNull: {
+                    args: [true],
+                    msg: 'Author name cannot be null',
+                },
+                notEmpty: {
+                    args: [true],
+                    msg : 'Author name canont be empty',
+                }, 
             }
         }
     }

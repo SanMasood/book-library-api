@@ -2,8 +2,20 @@ module.exports = (sequelize, DataTypes) => {
   const schema = {
     name: {
       type: DataTypes.STRING,
-      notEmpty: true
+      notEmpty: true,
+      allowNull: false,
+      validate : {
+        notNull: {
+          args: [true],
+          msg: 'Reader name cannot be null',
+      },
+      notEmpty: {
+          args: [true],
+          msg : 'Reader name canont be empty',
+      },
+
     },
+  },
 
     email: {
       type: DataTypes.STRING,
