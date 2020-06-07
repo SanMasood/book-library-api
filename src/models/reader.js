@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
           args: [true],
           msg : 'Reader name canont be empty',
       },
-
     },
   },
 
