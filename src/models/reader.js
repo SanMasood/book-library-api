@@ -10,20 +10,31 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true,
-        notNull: true,
-      }
+        isEmail: { 
+          args: [true],
+          msg: 'Invalid email address',
+        },
+        notNull: {
+        args: [true],
+        msg : 'Email cannot be empty'
+      },
+      },
       
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        notNull: true,
-        min: 8
-      }
+        notEmpty: {
+          args : [true],
+          msg: 'Password cannot be empty',
+        },
+         isLessThan8Characters(value) {
+          if (value.length < 8)
+            throw new Error('Password needs to be longer than 8 characters');
+      },
     },
+  },
 };
 
   return sequelize.define('Reader', schema);
