@@ -73,6 +73,31 @@ describe('/readers', () => {
         expect(response.body.errors.length).to.equal(1);
         expect(newReaderRecord).to.equal(null);
       })
+      it ('Throws an error if email is already registered', async() => {
+        const response1 = await request(app).post('/readers').send({
+          name : 'Larry Shaw',
+          email: 'larry@live.com',
+          password: 'larry1234567',
+        });
+        const response2 = await request(app).post('/readers').send({
+          name : 'Larry King',
+          email : 'larry@live.com',
+          password: 'larry543fds',
+        });
+        const newReaderRecord1 = await Reader.findByPk(response1.body.id, {
+          raw: true,
+        });
+        const newReaderRecord2 = await Reader.findByPk(response2.body.id, {
+          raw: true,
+        });
+        expect(response1.status).to.equal(200);
+        expect(newReaderRecord1.email).to.equal('larry@live.com');
+        //expect(newReaderRecord1).to.be.true; 
+
+        expect(response2.status).to.equal(400);
+        expect(response2.body.errors.length).to.equal(1);
+        expect(newReaderRecord2).to.be.null;
+      })
     });
   });
 

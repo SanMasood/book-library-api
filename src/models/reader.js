@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'Email address already in use!',
+      },
       validate: {
         isEmail: { 
           args: [true],
@@ -29,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         args: [true],
         msg : 'Email cannot be empty'
       },
-      },
+    },
       
     },
     password: {
@@ -40,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
           args : [true],
           msg: 'Password cannot be empty',
         },
-         isLessThan8Characters(value) {
+         isLessThan8Characters(value) { //custom validator
           if (value.length < 8)
             throw new Error('Password needs to be longer than 8 characters');
       },

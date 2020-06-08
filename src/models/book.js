@@ -15,21 +15,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
         },
-        /*author: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate:{
-                notNull: {
-                    args: [true],
-                    msg: 'Author needs a name.'
-                },
-                notEmpty: {
-                    args: [true],
-                    msg: 'Author name cannot be empty'
-                },
-            },
-        },*/
-        //genre: DataTypes.STRING, 
+         
         ISBN: DataTypes.STRING,
         };
     return sequelize.define('Book', schema);
