@@ -106,7 +106,7 @@ describe ('/genres', () => {
           
         });
         it('returns a 404 error if the genre does not exist', async () => {
-            const response = await request(app).get('/genres/000');
+            const response = await request(app).get('/genres/998');
     
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The genre could not be found.');
@@ -129,7 +129,7 @@ describe ('/genres', () => {
         })
         it ('throws an error if genre id not found', async() => {
             const response = await request(app)
-            .patch(`/genres/000`)
+            .patch(`/genres/98`)
             .send({ category : 'Test Genre'});
 
             expect(response.status).to.equal(404);
@@ -147,12 +147,11 @@ describe ('/genres', () => {
             expect(deletedGenre).to.equal(null);
         })
         it ('throws an error if genre by ID is not found', async() => {
-            const response = await request(app).delete('genres/00000');
+            const response = await request(app).delete('/genres/99');
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The genre could not be found.');
 
         })
-
     })
 
 })

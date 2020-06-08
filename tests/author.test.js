@@ -105,7 +105,7 @@ describe ('/authors', () => {
           
         });
         it('returns a 404 error if the author does not exist', async () => {
-            const response = await request(app).get('/authors/000');
+            const response = await request(app).get('/authors/99');
     
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The author could not be found.');
@@ -146,7 +146,7 @@ describe ('/authors', () => {
             expect(deletedAuthor).to.equal(null);
         })
         it ('throws an error if author by ID is not found', async() => {
-            const response = await request(app).delete('authors/00000');
+            const response = await request(app).delete('/authors/88');
             expect(response.status).to.equal(404);
             expect(response.body.error).to.equal('The author could not be found.');
 
