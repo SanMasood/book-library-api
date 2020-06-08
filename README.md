@@ -39,6 +39,7 @@ Install the dependencies:
 After installing the dependencies, use the .env.example to create 2 other files on the route of your project. Name these  `.env` & `.env.test`
 
 * The `.env` file should have the details of your production database, so replace DB_PASSWORD and DB_NAME with some more appropriate values. For example: DB_PASSWORD=mypassword DB_NAME=book_library
+
 * The `.env.test` file should have the details of your test database, so replace DB_PASSWORD and DB_NAME with some more appropriate values. For example: DB_PASSWORD=mypassword DB_NAME=book_library_test
 
 ## Running the Project:
@@ -86,7 +87,8 @@ POST `http://localhost:3000/authors` : to create a new Author record.
 POST `http://localhost:3000/genres` : to create a new Genre record.
 
 
-You will need to select **POST** from the drop down list. Please note that in order to create a new record, you will obviously have to 'send' something to the API. For this, you will need to select the BODY tab underneath, select RAW and type in the following:
+You will need to select **POST** from the drop down list. Please note that in order to create a new record, you will obviously have to 'send' something to the API. 
+For this, you will need to select the BODY tab underneath, select RAW and type in the following:
 
 ```
 {
@@ -99,7 +101,7 @@ You will need to select **POST** from the drop down list. Please note that in or
 
 }
 ```
-Please refer to Book, Genre & Author models to send the appropriate fields into each table.
+**Please refer to Book, Genre & Author models to send the appropriate fields into each table.**
 
 
 ### GET RECORDS BY ID :
@@ -114,7 +116,8 @@ GET `http://localhost:3000/genres/<id>` : to get a particular Genre record.
 
 You will need to select **GET** from the dropdown list.
 You will also need to know the ID beforehand in order to access a particular record. 
-Enter the id excluding the <> signs, that is just for the purpose of this documentation.
+
+**Enter the id excluding the <> signs, that is just for the purpose of this documentation.**
 
 
 ### UPDATE RECORDS BY ID :
@@ -129,7 +132,9 @@ PATCH `http://localhost:3000/genres/<id>` : to update a particular Genre record.
 
 You will need to select **PATCH** from the dropdown list.
 You will also need to know the ID beforehand in order to access a particular record.
-You can then send such a request in the body tab as shown below. This is what will be updated in that particular record whose id you have entered. In this example, the name of a reader whose `id` has been sent for a **PATCH** request is being updated.
+You can then send such a request in the body tab as shown below. This is what will be updated in that particular record whose id you have entered.
+
+In this example, the name of a reader whose `id` has been sent for a **PATCH** request is being updated.
 
 
 ```
@@ -157,6 +162,7 @@ You will also need to know the ID beforehand in order to delete a particular rec
 
 
 >Please note that most fields have a validation check on them. In case of Reader, if any field is missing, you can expect an error message, as all fields are required. Similar rules applies to Book, Author & Genre. 
+
 Likewise, once a reader is registered with an email, the same email cannot be used to register another reader. Password should always be more than 8 characters.
 
 ## CREDITS:
