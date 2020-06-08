@@ -7,8 +7,7 @@ describe ('/authors', () => {
     before(async () => {   
          await Author.sequelize.sync();    
          await Author.destroy({ where: {} });    
-    }); 
-        
+    });         
 
     describe ('with no authors in the table', () => {
         describe ('POST /authors', () => {
