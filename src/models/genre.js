@@ -3,7 +3,10 @@ module.exports = (sequelize, DataTypes) => {
         category: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
+            unique: {
+               args: [true],
+               msg: 'This genre already exists!',
+            },
             validate:{
                 notNull: {
                     args: [true],

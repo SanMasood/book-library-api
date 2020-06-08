@@ -72,7 +72,7 @@ describe('/readers', () => {
         expect(response.status).to.equal(400);
         expect(response.body.errors.length).to.equal(1);
         expect(newReaderRecord).to.equal(null);
-      })
+      });
       it ('Throws an error if email is already registered', async() => {
         const response1 = await request(app).post('/readers').send({
           name : 'Larry Shaw',
@@ -97,7 +97,8 @@ describe('/readers', () => {
         expect(response2.status).to.equal(400);
         expect(response2.body.errors.length).to.equal(1);
         expect(newReaderRecord2).to.be.null;
-      })
+      });
+      
     });
   });
 
