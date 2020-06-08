@@ -118,13 +118,13 @@ describe ('/authors', () => {
             const author = authors[0];
             const response = await request(app)
             .patch(`/authors/${author.id}`)
-            .send({name : 'F yuyu'});
+            .send({name : 'K yuyu'});
 
             const updatedAuthorRecord = await Author.findByPk(author.id, {
                 raw : true,
             });
             expect(response.status).to.equal(200);
-            expect(updatedAuthorRecord.name).to.equal('F yuyu');
+            expect(updatedAuthorRecord.name).to.equal('K yuyu');
         })
         it ('throws an error if author id not found', async() => {
             const response = await request(app)
